@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AgroSense</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy@1.1.1/dist/webcam-easy.min.js"></script>
+</head>
+
+<body>
+    <!--AgroSense header design-->
+    <header class="header">
+        <a href="#" class="logo" id="logo">Agro<span class="Tech">S</span>ense</a>
+        <a href="#" class="logo" id="logo1" style="display:none"></a>
+        <i class='bx bx-menu' id="menu-icon"></i>
+        <nav class="navbar">
+            <a href="#home">Home</a>
+            <a href="#plant" class="hide_plant">Plant</a>
+            <a href="#education">Plant Diseases</a>
+            <a href="#sensor">Sensor Value</a>
+            <a href="#contact">Contact Us</a>
+            <a href="login.html" class="login" id="login"><strong>LOGIN</strong></a>
+            <a href="signup.html" class="login" id="signup"><strong>SIGNUP</strong></a>
+            <button id="logout" name="logout"
+                style="display:none; font-weight: bold; margin-left:1rem; padding:1rem">Logout</button>
+        </nav>
+    </header>
+    <!--Home part design-->
+
+    <section class="home" id="home">
+
+        <video autoplay muted loop id="video-home">
+            <source src="images/Bg-home.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="home-img">
+            <img src="images/logo_1.png" alt="error loading image">
+
+        </div>
+        <div class="home-content">
+            <h3 style="font-family: 'VT323', monospace;">Welcome to our AgroSense Website</h3>
+            <!-- <h1>This Website helps   </h1> -->
+            <h3 style="font-family: 'VT323', monospace;">Developed by <span class="multi-text"
+                    style="font-family: 'VT323', monospace;"></span></h3>
+            <p style="font-weight: bolder;">This Website provides you with feature of predicting plant disease and
+                provides with possible remidies </p>
+        </div>
+    </section>
+
+    <!--Plant section part starts from here -->
+    <section class="plant" id="plant1">
+        <div class="plant"
+            style="border: 1px solid black;padding:4rem;  color:white;background:linear-gradient(black,rgb(90, 179, 1095)); width: 80rem; border-radius: 1rem;">
+            <h1 style="font-weight: bold;"> Plant Disease Detection </h1>
+            Do you want to check whether your Plant have disease?
+            <a href="signup.html"
+                style="background-color: rgb(16, 228, 199); padding:1rem ;height:5rem;border-radius:0.5rem;font-weight: bold ;color: black; text-decoration: none;">Register
+                Now!!</a>
+            Already have an acccount?
+            <a href="login.html"
+                style="background-color: rgb(16, 228, 199); padding:1rem ;height:5rem;border-radius:0.5rem;font-weight: bold ; text-decoration: none;color: black;">Login</a>
+        </div>
+    </section>
+
+    <section class="plant" id="plant">
+        <div class="upload">
+            <div id="cameraConatiner">
+                <h3 style="font-family: 'Poppins', sans-serif;">Upload your file</h3>
+                <div class="drag-area" style="font-family: 'Poppins', sans-serif;" id="drag-area">
+                    <div class="icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+
+                    <span class="upload-header" style="font-family: 'Poppins', sans-serif;">Drag & Drop</span>
+                    <span class="upload-header" style="font-family: 'Poppins', sans-serif;">or <span class="button"
+                            style="font-family: 'Poppins', sans-serif;" id="browseButton">Browse</span></span>
+                    <input type="file" hidden id="imageFile">
+                    <span class="support" style="font-family: 'Poppins', sans-serif;">Support: JPEG,JPG,PNG</span>
+                </div>
+                <div class="camera-container" id="cameraContainer">
+                    <video id="webCam" autoplay plays inline width="590" height="500" style="display: none;"></video>
+                    <!-- <canvas id="canvas" width="200" height="200"></canvas> -->
+                </div>
+            </div>
+
+            <div class="firebase">
+
+                <!-- <button class="button-63" role="button" id="cameraButton">Camera</button> -->
+                <!-- <button class="button-63" role="button" onclick="myFunction()">Camera</button> -->
+                <!-- <button class="button-63" role="button" onclick="init()">Upload</button> -->
+                <!-- <div>Teachable Machine Image Model</div> -->
+                <button type="button" onclick="combine()  " class="button-63" id="cam-stop">Start</button>
+                <button type="button" class="button-63" onclick="uploadButton1()" >Upload</button>
+                <button type="button" onclick="stop()" class="button-63" id="stop">Stop</button>
+
+
+            </div>
+            <p id="predictionText"></p>
+            <div id="webcam-container"></div>
+            <div id="label-container"></div>
+            <div id="label-container1"></div>
+        </div>
+
+    </section>
+
+    <!--services part-->
+    <section class="education" id="education">
+        <h1 class="heading" style="color: black;">Disease <span>Section</span></h2>
+            <div class="education-container">
+                <div class="education-box">
+                    <i class='bx bx-leaf'></i>
+                    <h3>Yellow leaf disease</h3>
+                    <p>Yellow leaf disease is a general term used to describe a condition in plants where the leaves
+                        turn
+                        yellow, often indicative of nutrient deficiencies or viral infection.Yellow leaf disease is
+                        caused
+                        by a phytoplasma, transmitted by the plant hopper Proutista moesta. </p>
+
+                </div>
+                <div class="education-box">
+                    <img src="images/root.png">
+                    <h3>Fruit rot</h3>
+                    <p>Fruit rot in areca nut is a fungal disease characterized by the decay of the fruit, commonly
+                        caused
+                        by pathogens such as Colletotrichum gloeosporioides. It often leads to the deterioration of the
+                        areca nut's quality and can result in economic losses for growers. </p>
+
+                </div>
+                <div class="education-box">
+                    <img src="images/foot.jpg">
+                    <h3>Foot rot</h3>
+                    <p>Foot rot diseases in areca nut result from infections and decay in the lower trunk and roots,
+                        commonly caused by pathogens such as Phytophthora palmivora, leading to wilting, leaf yellowing,
+                        and
+                        potential death of the palm, posing a significant threat to plantations.</p>
+
+                </div>
+
+                <!-- Pepper -->
+                <div class="education-box">
+                    <img src="images/yellow-spot.jpg">
+                    <h3>Bacterial Leaf Spot</h3>
+                    <p>Bacterial leaf spot,a widespread plant infection,is prevalent in rainy,humid,and temperate
+                        climates
+                        where the bacteria thrive.Spread through touch,seeds,or soil,the infection can be mitigated by
+                        addressing these environmental conditions.</p>
+
+                </div>
+                <div class="education-box">
+                    <i class='bx bx-leaf'></i>
+                    <h3>Curling Leaves</h3>
+                    <p>Curling pepper leaves is a sign of either too much light, too much water, or plant edema. There
+                        are
+                        diseases that can cause curled leaves, but if the plant appears otherwise healthy. Curling and
+                        distorted leaves, along with stunted growth, are common symptoms </p>
+
+                </div>
+                <div class="education-box">
+                    <img src="images/Bp.png">
+                    <h3>Yellowing Leaves</h3>
+                    <p>One of the most common issues pepper growers face is the dreaded yellowing leaves. While it is
+                        usually not a big deal, there are measures you need to take to correct this pepper plant
+                        problem.
+                    </p>
+
+                </div>
+
+            </div>
+    </section>
+
+    <!--Sensor part-->
+    <section class="plant" id="plant2">
+
+        <div class="plant "
+            style="border: 1px solid black; padding:4rem;   color:white;background:linear-gradient(rgb(90, 179, 1095),black); width: 80rem; border-radius: 1rem;">
+            <!-- <h1 style="font-weight: bold;"> Sensor Value  </h1> -->
+            <h2 class="heading" style="color: black; padding: 0rem;">Sensor <span>Value</span></h2>
+            Want to know your field sensor data?
+            <a href="signup.html"
+                style="background-color: rgb(16, 228, 199); padding:1rem ;height:5rem;border-radius:0.5rem;font-weight: bold ;color: black; text-decoration: none;">Register
+                Now!!</a>
+            Already have an acccount?
+            <a href="login.html"
+                style="background-color: rgb(16, 228, 199); padding:1rem ;height:5rem;border-radius:0.5rem;font-weight: bold ; text-decoration: none;color: black;">Login</a>
+        </div>
+    </section>
+
+    <section class="sensor" id="sensor">
+        <h2 class="heading" style="color: black;">Sensor <span>Values</span></h2>
+        <div class="sensor-container">
+            <div class="sensor-box">
+
+                <h1>Humidity</h1>
+                <p class="value" id="humidity"> </p>
+                <p class="value" id="humidity-data"> </p>
+
+            </div>
+            <div class="sensor-box">
+                <h1>Temperature</h1>
+                <p class="value" id="temperature"> </p>
+                <p class="value" id="temperature-data"> </p>
+
+
+            </div>
+            <div class="sensor-box">
+
+                <h1>Soil moisture</h1>
+                <p class="value" id="moisture"> </p>
+                <p class="value" id="moisture-data"></p>
+
+            </div>
+
+
+        </div>
+    </section>
+
+
+
+    <!--Contact section starts from here-->
+    <section class="contact" id="contact">
+        <h2 class="heading">Contact <span style="color:rgb(3, 3, 117)">Me!!</span></h2>
+        <form name="submit-to-google-sheet">
+            <div class="input-box">
+                <input type="text" name="Name" placeholder="Enter your name">
+                <input type="email" name="Email" placeholder="Enter your email address ">
+            </div>
+            <div class="input-box">
+                <input type="number" name="Mobile_no" placeholder="Enter your mobile number">
+                <input type="text" name="Address" placeholder="Enter your address ">
+            </div>
+            <textarea name="Feedback" id="feedback" cols="30" rows="10" placeholder="Enter your feedback"></textarea>
+            <input type="submit" value="Submit" class="btn">
+            <input type="reset" value="Reset" class="btn">
+        </form>
+        <span id="msg"></span>
+    </section>
+
+    <!--footer and copywright part-->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; AAAV |All rights reserved </p>
+        </div>
+        <div class="footer-iconTop">
+            <a href="#home"><i class='bx bx-up-arrow-alt'></i></a>
+        </div>
+    </footer>
+    <!--Scroll reveal-->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <script src="index.js"></script>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyvkO6DCsB_0mcqV9RQN-je64-0fftB09p5uK2mPfB8Xj0TKkc2_0MDGD6MBzEE2IV7vA/exec'
+        const form = document.forms['submit-to-google-sheet']
+        const msg = document.getElementById('msg');
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    if (confirm("You sure you want to submit the form!")) {
+                        msg.innerHTML = "Form submitted succesfully";
+
+                    }
+                    else {
+                        msg.innerHTML = "Form submission cancelled!";
+                    }
+                    //   msg.innerHTML ="Form Submitted Succesfully"
+                    setTimeout(function () {
+                        msg.innerHTML = ""
+                    }, 5000)
+                }
+                )
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+</body>
+<!--script for accesing the product which we need-->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"> </script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"> </script>
+<script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    // import { } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+    // Your Firebase configuration and initialization code
+    const firebaseConfig = {
+        apiKey: "AIzaSyAeZeQWmUr8Q6RkSwZhplQPG8-uKTLmvV8",
+        authDomain: "iotagrosense.firebaseapp.com",
+        databaseURL: "https://iotagrosense-default-rtdb.firebaseio.com",
+        projectId: "iotagrosense",
+        storageBucket: "iotagrosense.appspot.com",
+        messagingSenderId: "273077172049",
+        appId: "1:273077172049:web:7e905c7a24c833679d4570",
+        measurementId: "G-VRXQB6PDTF"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+
+    document.getElementById("logout").addEventListener("click", function () {
+        if (localStorage.getItem('userAuth')) {
+            localStorage.removeItem('userAuth');
+            // Sign-out successful.
+            console.log('Sign-out successful.');
+            checkUserStatus(); // Update button visibility after logout
+        } else {
+
+            console.log('An error happened during logout.');
+        }
+    });
+
+    const storedUserAuth = localStorage.getItem('userAuth');
+    const user = storedUserAuth ? JSON.parse(storedUserAuth) : null;
+
+    var logo1 = document.getElementById("logo1");
+    // 0. user authentication status
+    function checkUserStatus() {
+        // const user = firebase.getAuth().currentUser;
+        const storedUserAuth = localStorage.getItem('userAuth');
+        const user = storedUserAuth ? JSON.parse(storedUserAuth) : null;
+        if (user) {
+            // User is signed in
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('signup').style.display = 'none';
+            document.getElementById("logo").style.display = 'none';
+            logo1.innerHTML = "Welcome" + " " + user.displayName;
+            document.getElementById("logo1").style.display = 'inline-block';
+            document.getElementById('logout').style.display = 'inline-block';
+            document.getElementById('plant').style.display = 'flex';
+            document.getElementById('plant1').style.display = 'none';
+            document.getElementById('plant2').style.display = 'none';
+            document.getElementById('sensor').style.display = 'block';
+
+        } else {
+            // User is not signed in
+            document.getElementById('login').style.display = 'inline-block';
+            document.getElementById('signup').style.display = 'inline-block';
+            document.getElementById('logout').style.display = 'none';
+            document.getElementById("logo").style.display = 'inline-block';
+            logo1.style.display = 'none';
+            document.getElementById('plant1').style.display = 'flex';
+            document.getElementById('plant').style.display = 'none';
+            document.getElementById('sensor').style.display = 'none';
+            document.getElementById('plant2').style.display = 'flex';
+            // document.getElementsByClassName('.hide_plant').style.display='none';
+
+
+
+        }
+    }
+    checkUserStatus();
+
+
+
+    //sensor data accessing
+    firebase.initializeApp(firebaseConfig)
+    var database = firebase.database()
+    var dataref1 = database.ref('Humidity');
+    var dataref2 = database.ref('Moisture');
+    var dataref3 = database.ref('Temperature');
+
+    //fethching the data
+    dataref1.on('value', function (getdata1) {
+        var humi = getdata1.val();
+        if (humi > 40 && humi < 60) {
+            document.getElementById('humidity').innerHTML = humi + "%"
+            document.getElementById('humidity-data').innerHTML = "Ideal condition";
+        }
+        else {
+            document.getElementById('humidity').innerHTML = humi + "%"
+            document.getElementById('humidity-data').innerHTML = "Not an Ideal condition";
+        }
+
+    })
+    dataref2.on('value', function (getdata2) {
+        var moist = getdata2.val();
+        if (moist > 2000) {
+            document.getElementById('moisture').innerHTML = moist;
+            document.getElementById('moisture-data').innerHTML = "Soil is dry"
+        }
+        else {
+            document.getElementById('moisture').innerHTML = moist
+            document.getElementById('moisture-data').innerHTML = "Soil is wet"
+        }
+    })
+
+    dataref3.on('value', function (getdata3) {
+        var temp = getdata3.val();
+        if (temp > 22 && temp < 30) {
+            document.getElementById('temperature').innerHTML = temp + "&#8451;"
+            document.getElementById('temperature-data').innerHTML = "Is suitable for the crop"
+        }
+        else {
+            document.getElementById('temperature').innerHTML = temp + "&#8451;"
+            document.getElementById('temperature-data').innerHTML = "Is not suitable for the crop"
+        }
+
+    })
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+    // More API functions here:
+    // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+    // the link to your model provided by Teachable Machine export panel
+    const URL = "./my_model/";
+
+    let model, webcam, labelContainer, maxPredictions;
+    let canvas;
+    let c = 0
+    // Load the image model and setup the webcam
+    async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+        document.getElementById('cameraContainer').style.display = 'flex';
+        document.getElementById('cameraContainer').style.justifyContent = 'center'
+        document.getElementById('label-container').style.display = 'flex';
+        document.getElementById('label-container').style.flexDirection = 'column';
+        document.getElementById('label-container').style.textAlign = 'center'
+        document.getElementById('label-container').style.fontFamily = 'cursive'
+
+
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        // Convenience function to setup a webcam
+        const flip = true; // whether to flip the webcam
+        webcam = new tmImage.Webcam(400, 400, flip); // width, height, flip
+        await webcam.setup(); // request access to the webcam.
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+        // append elements to the DOM
+        labelContainer = document.getElementById("label-container");
+        document.getElementById("cameraContainer").appendChild(webcam.canvas);
+
+        // webcamcontainer.appendChild(document.createElement("div"));
+        for (let i = 0; i < maxPredictions; i++) { // and class labels
+
+            labelContainer.appendChild(document.createElement("div"));
+        }
+    }
+
+    async function stop() {
+        // const flip = false;
+        await webcam.stop();
+        document.getElementById('cameraContainer').removeChild(webcam.canvas);
+        document.getElementById('drag-area').style.display = 'flex';
+        document.getElementById('cameraContainer').style.display = 'none';
+        document.getElementById('label-container').style.display = 'none';
+
+    }
+    async function loop() {
+        webcam.update(); // update the webcam frame
+        await predict();
+        window.requestAnimationFrame(loop);
+
+    }
+
+    // run the webcam image through the image model
+    async function predict() {
+        // predict can take in an image, video or canvas html element
+
+        const prediction = await model.predict(webcam.canvas);
+        for (let i = 0; i < maxPredictions; i++) {
+            // labelContainer.style.fontFamily = 'cursive';
+            const classPrediction =
+                prediction[i].className + ": " + prediction[i].probability.toFixed(2)
+            labelContainer.childNodes[i].innerHTML = classPrediction;
+        }
+    }
+    function close_upload() {
+        document.getElementById('drag-area').style.display = 'none';
+    }
+    function combine() {
+        close_upload(); 
+        init();
+    }
+    function uploadButton1() {
+        const imageFile = document.getElementById('imageFile');
+        const image = new Image();
+
+        imageFile.onchange = function (e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                image.src = e.target.result;
+                // Call your prediction function with the loaded image
+                predictImage1(image);
+            };
+
+            reader.readAsDataURL(file);
+        };
+
+    }
+    async function predictImage1(image) {
+        // Assuming your model.predict function accepts an image element
+        const prediction = await model.predict(image);
+        for (let i = 0; i < maxPredictions; i++) {
+            // labelContainer.style.fontFamily = 'cursive';
+            const classPrediction =
+                prediction[i].className + ": " + prediction[i].probability.toFixed(2)
+            labelContainer.childNodes[i].innerHTML = classPrediction;
+        }
+        // Rest of your prediction logic using prediction data
+    }
+    // Function to handle image upload
+    // function handleImageUpload(event) {
+    //     const fileInput = document.getElementById('imageFile');
+    //     const reader = new FileReader();
+
+    //     reader.onload = async function (e) {
+    //         const image = new Image();
+    //         image.src = e.target.result;
+    //         image.onerror = function () {
+    //             console.error("Error loading image file.");
+    //         };
+
+    //         image.onload = async function () {
+    //             // Process uploaded image (resize, normalize etc.)
+    //             const processedImage = preprocessImage(image); // Assuming preprocessImage function
+
+    //             // Call prediction after processing
+    //             const prediction = await model.predict(processedImage);
+
+    //             // Update prediction text (optional)
+    //             // You can uncomment this block to display the predicted class and probability as text
+    //             // const predictionText = prediction.className[prediction.argMax()] + ": " + prediction.dataSync()[prediction.argMax()].toFixed(2);
+    //             // document.getElementById('predictionText').textContent = "Prediction: " + predictionText;
+
+    //             for (let i = 0; i < maxPredictions; i++) {
+    //                 // labelContainer.style.fontFamily = 'cursive';
+    //                 const classPrediction =
+    //                     prediction[i].className + ": " + prediction[i].probability.toFixed(2)
+    //                 labelContainer.childNodes[i].innerHTML = classPrediction;
+    //             }
+    //         };
+    //     };
+
+    //     reader.readAsDataURL(fileInput.files[0]);
+    // }
+
+    function preprocessImage(image) {
+        try {
+            // 1. Convert image to a tensor (assuming TensorFlow.js)
+            const tensor = tf.browser.fromPixels(image);
+
+            // 2. Resize the image (adjust dimensions as needed)
+            const resizedTensor = tf.image.resizeBilinear(tensor, [224, 224]);
+
+            // 3. Normalize pixel values (adjust normalization based on model requirements)
+            const normalizedTensor = tf.div(resizedTensor, 255.0);
+
+            return normalizedTensor;
+        } catch (error) {
+            console.error("Error preprocessing image:", error);
+            return null;
+        }
+    }
+
+
+    // function uploadImage() {
+    //     const fileInput = document.getElementById('imageFile');
+    //     const imageFile = imageUpload.files[0];
+    // }
+    // function predictImage() {
+    //     const fileInput = document.getElementById('imageFile');
+    //     const reader = new FileReader();
+
+    //     reader.onload = function (e) {
+    //         const image = new Image();
+    //         image.src = e.target.result;
+    //         image.onerror = function () {
+    //             console.error("Error loading image file");
+    //         };
+    //         image.onload = async function () {
+    //             // Process uploaded image (resize, normalize etc.)
+    //             const processedImage = preprocessImage(image); // Assuming preprocessImage function
+
+    //             // Call prediction after processing
+    //             const prediction = await model.predict(processedImage);
+    //             for (let i = 0; i < maxPredictions; i++) {
+    //                 // labelContainer.style.fontFamily = 'cursive';
+    //                 const classPrediction =
+    //                     prediction[i].className + ": " + prediction[i].probability.toFixed(2)
+    //                 labelContainer.childNodes[i].innerHTML = classPrediction;
+    //                 console.log();
+    //             }
+    //         };
+    //     };
+
+    //     // reader.readAsDataURL(fileInput.files[0]);
+    // }
+
+    // const modelURL = URL + "model.json";
+    // const metadataURL = URL + "metadata.json";
+
+    // // let model; // Global variable to store the loaded model
+
+    // // Function to handle image upload
+    // function handleImageUpload(event) {
+    //     const fileInput = document.getElementById('imageFile');
+    //     const reader = new FileReader();
+
+    //     reader.onload = async function (e) {
+    //         const image = new Image();
+    //         image.src = e.target.result;
+    //         image.onerror = function () {
+    //             console.error("Error loading image file.");
+    //         };
+
+    //         image.onload = async function () {
+    //             // Process uploaded image (resize, normalize etc.) if needed
+    //             const processedImage = preprocessImage(image); // Assuming preprocessImage function
+
+    //             // Call prediction after processing
+    //             const prediction = await predictImage(processedImage);
+
+    //             // Update prediction text
+    //             document.getElementById('predictionText').textContent = "Prediction: " + prediction;
+    //         };
+    //     };
+
+    //     reader.readAsDataURL(fileInput.files[0]);
+    // }
+    // async function preprocessImage(imageElement) {
+    //     try {
+    //         // Get image as a tensor
+    //         const imgTensor = tf.browser.fromPixels(imageElement);
+
+    //         // Resize image to 224x224 (assuming model expects this size)
+    //         const resizedTensor = tf.image.resizeBilinear(imgTensor, [224, 224]);
+
+    //         // Normalize image pixel values to the range [0, 1]
+    //         const normalizedTensor = tf.div(resizedTensor, 255);
+
+    //         return normalizedTensor;
+    //     } catch (error) {
+    //         console.error("Error preprocessing image:", error);
+    //         return null;
+    //     }
+    // }
+
+    // // Function to predict class probabilities from an image element
+    // async function predictImage(imageElement) {
+    //     if (!imageElement) {
+    //         console.error("No image provided for prediction.");
+    //         return;
+    //     }
+
+    //     // Process uploaded image (resize, normalize etc.) if needed
+    //     const processedImage = preprocessImage(imageElement); // Assuming preprocessImage function
+
+    //     // Call prediction after processing
+    //     const prediction = await model.predict(processedImage);
+
+    //     // Return the highest probability class and its probability
+    //     const maxIndex = prediction.argMax();
+    //     const maxProbability = prediction.dataSync()[maxIndex];
+    //     return `${prediction.className[maxIndex]}: ${maxProbability.toFixed(2)}`;
+    // }
+
+    // // Event listeners
+    // document.getElementById('browseButton').addEventListener('click', function () {
+    //     document.getElementById('imageFile').click();
+    // });
+
+    // document.getElementById('imageFile').addEventListener('change', handleImageUpload);
+
+    // document.getElementById('uploadButton').addEventListener('click', function () {
+    //     document.getElementById('imageFile').click();
+    // });
+
+
+</script>
+
+
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=VT323&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <div class="form-popup">
+        <img class="bodyimg" src="images/bg.jpg" style="border-radius: 0 10px 10px 0;">
+        <div class="form-box">
+            <div class="form-details">
+                <h3 style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">Create Account</h3>
+                <p style="font-family: 'VT323', monospace;  ">Please sign up using your personal information to stay
+                    connected with us</p>
+            </div>
+            <div class="form-content">
+                <h2 style="font-family: 'Cinzel', serif;">Sign up</h2>
+                <form action="#">
+                    <div class="input-field">
+                        <i class="fa-solid fa-user" style="color: black;"></i>
+                        <input type="text" placeholder="Name" id="name" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-envelope" style="color: black; font-size: 0.9rem;"></i>
+                        <input type="email" placeholder="Email" id="email" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-phone" style="color: black; font-size: 0.9rem;"></i>
+                        <input type="tel" placeholder="Phone" id="phone" pattern="[789]\d{10}" required>
+                    </div>
+                    <div class="input-field">
+                        <!-- <label>Password</label> -->
+                        <i class="fa-solid fa-lock" style="color: black;"></i>
+                        <input type="password" placeholder="Password" id="password" autocomplete="off" required>
+                    </div>
+                    <div class="input-field">
+                        <!-- <label>Password</label> -->
+                        <i class="fa-solid fa-lock" style="color: black;"></i>
+                        <input type="password" placeholder="Confirm Password" id="cpassword" autocomplete="off"
+                            required>
+                    </div>
+                    <button type="button" id="register" name="register" class="btn btn-success"
+                        style="padding: 0.2rem; margin-top: 0.2rem; font-size: 1rem; cursor: pointer;"> Register Now</button>
+
+                </form>
+
+            </div>
+            <div class="bottin-link">
+                Already have a acccount?
+                <a href="login.html" class="signup">Login</a>
+                <br>
+                <span class="back">
+                    <a href="index.html" class="back">BACK
+            </div>
+            </span>
+        </div>
+    </div>
+    </div>
+    <!-- Firebase -->
+
+</body>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    // import { database } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAeZeQWmUr8Q6RkSwZhplQPG8-uKTLmvV8",
+        authDomain: "iotagrosense.firebaseapp.com",
+        databaseURL: "https://iotagrosense-default-rtdb.firebaseio.com",
+        projectId: "iotagrosense",
+        storageBucket: "iotagrosense.appspot.com",
+        messagingSenderId: "273077172049",
+        appId: "1:273077172049:web:7e905c7a24c833679d4570",
+        measurementId: "G-VRXQB6PDTF"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth()
+
+    //Creating new user
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("register").addEventListener("click", function () {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var cpassword = document.getElementById("cpassword").value;
+            var phone = document.getElementById("phone").value;
+            //For new registration checking inputs are valid or not
+            if (confirm_password(password, cpassword) && validatePhoneNumber(phone)) {
+
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        // Signed in 
+                        sendEmailVerification(auth.currentUser)
+                            .then(() => {
+                                alert("Email Verification link sent");
+                                location.reload();  
+                            })
+                        const user = userCredential.user;
+                        console.log(user);
+
+                        //User diplayname storing
+                        updateProfile(user, { displayName: name })
+                            .then(() => {
+                                console.log("Display name set successfully");
+                            })
+                            .catch((error) => {
+                                console.error("Error setting display name:", error.message);
+                            });
+                        alert("Registration successfully!!");
+                       
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        // ..
+                        console.log(errorMessage);
+                        alert(error);
+                    });
+            }
+
+            else if (confirm_password(password, cpassword) == 1 && validatePhoneNumber(phone) == 0) {
+                alert("Invalid Phone Number. Please enter a 10-digit number starting with 7, 8, or 9.");
+            }
+
+            else {
+                alert("Password and Confirm password are not same");
+            }
+        });
+
+    });
+    //Password and confirm password check
+    function confirm_password(password, cpassword) {
+        if (password == cpassword) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    //Phone number check
+    function validatePhoneNumber() {
+        var phoneNumberInput = document.getElementById("phone");
+        var isValid = /^[6789]\d{9}$/.test(phoneNumberInput.value);
+        if (!isValid) {
+        
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+</script>
+<script src="signup.js"></script>
+
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <div class="form-popup">
+
+        <img class="bodyimg" src="images/bg.jpg" style="border-radius: 10px 0 0 10px;">
+        <div class="form-box">
+            <div class="form-details">
+                <h3>WELCOME</h3>
+                <p>Please log in using your personal information to stay connected with us</p>
+            </div>
+            <div class="form-content">
+                <h2>LOGIN</h2>
+                <form action="#">
+
+                    <div class="input-field">
+                        <i class="fa-solid fa-envelope" style="color: black; font-size: 0.9rem;"></i>
+                        <input type="email" placeholder="Email" id="email" required>
+                    </div>
+
+                    <div class="input-field">
+                        <i class="fa-solid fa-lock" style="color: black; ;"></i>
+                        <input type="password" placeholder="Password" autocomplete="off" id="password" required>
+                    </div>
+                    <!-- <button type="submit" class="Submit">Submit</button> -->
+                    <button type="button" id="login" name="login" class="btn btn-success"
+                        style="padding: 0.2rem; margin-top: 0.2rem; font-size: 1rem; cursor: pointer;">Submit</button>
+                </form>
+
+                <!-- <button type="button" id="forgot" name="forgot" class="btn btn-success" -->
+                    <!-- style="padding: 0.2rem; margin-top: 0.2rem; font-size: 1rem; cursor: pointer;">Forgot -->
+                    <!-- Password?</button> -->
+            </div>
+            <div class="bottin-link">
+                Don't have acccount?
+                <a href="signup.html" class="signup">Signup</a>
+                <br>
+                <span class="back">
+                    <a href="index.html" class="back">BACK
+            </div>
+            </span>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- <script src="signin.js"></script> -->
+
+</body>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    // import { database } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAeZeQWmUr8Q6RkSwZhplQPG8-uKTLmvV8",
+        authDomain: "iotagrosense.firebaseapp.com",
+        databaseURL: "https://iotagrosense-default-rtdb.firebaseio.com",
+        projectId: "iotagrosense",
+        storageBucket: "iotagrosense.appspot.com",
+        messagingSenderId: "273077172049",
+        appId: "1:273077172049:web:7e905c7a24c833679d4570",
+        measurementId: "G-VRXQB6PDTF"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth()
+    console.log(app);
+    //Sigin with email and password
+    document.getElementById("login").addEventListener("click", function () {
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                //Current user credential in user
+                const user = userCredential.user;
+                onAuthStateChanged(auth, (user) => {
+                    if (user.emailVerified) {
+                        console.log(user);
+                        alert(user.email + " Login successfully!!!");
+                        //Cookies 
+                        localStorage.setItem('userAuth', JSON.stringify(user));
+                        window.location.href = "index.html";
+                    } else {
+                        alert('Email Verification Not done');
+                    }
+                });
+
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage);
+                alert(errorMessage);
+            });
+    });
+    document.getElementById("forgot").addEventListener("click", function () {
+        // Get the user's email address
+        const email = document.getElementById("email").value;
+
+        // Send a request to the server to initiate password reset
+        fetch('/sendPasswordResetEmail', {
+            method: 'POST',
+            body: JSON.stringify({ email }),
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Password reset email sent! Check your inbox.');
+                } else {
+                    console.error('Error sending password reset email:', response.statusText);
+                    alert('An error occurred. Please try again later.');
+                }
+            })
+            .catch(error => {
+                console.error('Error sending password reset request:', error);
+                alert('An error occurred. Please check your internet connection and try again.');
+            });
+    });
+
+
+</script>-
+
+</html>

@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lobster&family=Nanum+Myeongjo&family=Playball&family=Poppins:wght@300&family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    /* left:0; */
+    scroll-behavior: smooth;
+    font-family: 'Bubblegum Sans', sans-serif;
+
+}
+
+body {
+    /* background-color: #FFDEE9;      */
+    /* background-image: url('images/su.jpg'); */
+    background-color: #FBDA61;
+    background-image: linear-gradient(90deg, #FBDA61 0%, #FF5ACD 100%);
+    /* background-image: url('images/signinbg.jpg'); */
+    background-repeat: none;
+    background-size: cover;
+}
+
+
+.form-popup,
+.forgot,
+.back,
+.signup {
+    text-decoration: none;
+}
+
+.form-popup {
+    display: flex;
+    width: 40rem;
+    height: 27rem;
+    font-size: 1.02rem;
+    background-color: #08AEEA;
+    background-image: linear-gradient(270deg, #08AEEA 0%, #2AF598 100%);
+    border-radius: 10px;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    margin-top: 7rem;
+    z-index: 100;
+    border: 1px solid black;
+
+}
+
+.form-popup img {
+    width: 17rem;
+    order: 1;
+}
+
+.form-details h3 {
+    font-size: 3rem;
+    color: rgb(9, 1, 4);
+    text-align: center;
+    padding: 0.75rem;
+    background-image: url('images/bg.jpg');
+    background-size: cover;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-size: cover;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.form-details p {
+    color: black;
+    text-align: center;
+    padding: 0.75rem;
+}
+
+.input-field {
+    color: white;
+    /* justify-content: space-between; */
+
+}
+
+.input-field input {
+    padding: 0.4rem;
+    margin: 0.1rem;
+    width: 15rem;
+    border-radius: 0.25rem;
+    border: none;
+}
+
+
+.Submit{
+    margin:0.25rem;
+    padding: 0.01rem;
+    border-radius: 0.5rem;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+
+
+    
+}
+/* .Submit:hover{
+    background-color:rgb(238, 178, 190);
+    color: black;
+} */
+
+/* Test */
+.button,
+.tick {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+
+.button {
+    width: 4rem;
+    height: 2rem;
+    background: dodgerblue;
+    border-radius: 0.4rem;
+    transition: all .3s cubic-bezier(0.67, 0.17, 0.40, 0.83);
+    margin: auto;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.button svg {
+    transform: rotate(180deg);
+    transition: all .5s;
+}
+
+.button__circle {
+    width: 2rem;
+    height: 2rem;
+    background: mediumseagreen;
+    border-radius: 50%;
+    transform: rotate(-180deg);
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.tick {
+    color: white;
+    font-size: 1rem;
+    transition: all .9s;
+    justify-content: center;
+}
+
+@media (max-width:900px){
+   
+
+    .form-popup {
+
+        background-image: none;
+        /* flex-direction: column; */
+        width: 30rem;
+        height:30rem;
+      
+    }
+    .form-popup img{
+        width: 15rem;
+        height: 10rem;
+    }
+    
+}
+    @media (max-width:990px){
+        html{
+            font-size: 65%;
+        }
+        body{
+            background-repeat: none;
+            /* background-image: none; */
+            /* margin-left: 10%; */
+           margin-top: 10%;
+           padding-top: 10rem;
+
+    }
+    .form-popup{
+        display:flex;
+        justify-content: center;
+        align-items:center;
+
+    }
+ 
+    .bodyimg{
+        display:none;
+    }
+    
+    }
+
+
+  @media (max-width:768px){
+    .bodyimg{
+        display:none;
+        background-repeat: none;
+    }
+  }
+  @media (max-width:617px){
+    .bodyimg{
+        display:none;
+        background-repeat: none;
+    }
+  }
+  @media (max-width:450px){
+    .bodyimg{
+        display:none;
+        background-repeat: none;
+    }
+ }
+ @media (max-width:365px){
+    .bodyimg{
+        display:none;
+        background-repeat: none;
+    }
+ }
+ 
